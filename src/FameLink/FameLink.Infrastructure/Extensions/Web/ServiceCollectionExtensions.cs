@@ -10,6 +10,7 @@ using Microsoft.OpenApi.Models;
 using FameLink.Infrastructure.Options;
 using FameLink.Infrastructure.Identity;
 using System.Reflection;
+using FluentValidation.AspNetCore;
 
 namespace FameLink.Infrastructure.Extensions.Services
 {
@@ -53,9 +54,22 @@ namespace FameLink.Infrastructure.Extensions.Services
 
             return services;
         }
+
         public static IServiceCollection AddMediatR(this IServiceCollection services, params Assembly[] handlersAssembly)
         {
             return services.AddMediatR(assemblies: handlersAssembly);
+        }
+
+        public static IServiceCollection AddFluentValidations(this IServiceCollection services, Assembly assembly)
+        {
+            services
+               .AddMvc()
+               .AddFluentValidation(cfg =>
+               {
+                   cfg.RegisterValidatorsFromAssembly(assembly);
+               });
+
+            return services;
         }
 
         public static IServiceCollection AddSwagger(this IServiceCollection services)

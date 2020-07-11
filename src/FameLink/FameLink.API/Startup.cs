@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using FameLink.Domain.Helpers;
+using System.Reflection;
 
 namespace FameLink.API
 {
@@ -36,6 +37,8 @@ namespace FameLink.API
             services.AddSwagger();
 
             services.AddMediatR(DomainAssemblyIndicator.GetAssembly());
+
+            services.AddFluentValidations(Assembly.GetExecutingAssembly());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
